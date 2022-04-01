@@ -14,7 +14,7 @@ ButLowerCase.addEventListener("click", () => {
 });
 
 ButProperCase.addEventListener("click", () => {
-    let textChanged = text.value.split(" ");
+    let textChanged = text.value.split(/\s+/);
     if (!textChanged[textChanged.length - 1])
         textChanged.pop();
     for (let it in textChanged) {
@@ -23,25 +23,24 @@ ButProperCase.addEventListener("click", () => {
         word = word[0].toUpperCase() + word.slice(1);
         textChanged[it] = word;
     }
-    text.value = textChanged.join(" ");
+    text.value = textChanged.join(' ');
 });
 
 ButSentenceCase.addEventListener("click", () => {
-    const re = /([.!?]+)\s*/;
+    const re = /\s*([.!?]+)\s*/;
     let textChanged = text.value.split(re);
     if (!textChanged[textChanged.length - 1])
         textChanged.pop();
     for (let it in textChanged) {
         let sentence = textChanged[it];
         sentence = sentence.toLowerCase();
-        sentence.split(" ")
         if (!/[.!?]+/.test(sentence))
             sentence = sentence[0].toUpperCase() + sentence.slice(1);
         else
-            sentence = sentence + " ";
+            sentence = `${sentence} `;
         textChanged[it] = sentence;
     }
-    text.value = textChanged.join("");
+    text.value = textChanged.join('');
 });
 
 // ButSentenceCase.addEventListener("click", () => {
@@ -65,7 +64,7 @@ ButDownload.addEventListener("click", () => {
 
 function download(filename, text) {
     let element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
     element.setAttribute('download', filename);
 
     element.style.display = 'none';
